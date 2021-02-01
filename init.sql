@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS messages (
 
 DELIMITER //
 
-CREATE PROCEDURE messages_create(_content varchar(300))
+CREATE OR REPLACE PROCEDURE messages_create(_content varchar(300))
 AS
 BEGIN
   INSERT INTO messages (
@@ -21,25 +21,25 @@ BEGIN
   ECHO SELECT LAST_INSERT_ID() as id;
 END //
 
-CREATE PROCEDURE messages_read_by_id(_id bigint)
+CREATE OR REPLACE PROCEDURE messages_read_by_id(_id bigint)
 AS
 BEGIN
   ECHO SELECT id, content, createdate FROM messages WHERE id = _id;
 END //
 
-CREATE PROCEDURE messages_read_all()
+CREATE OR REPLACE PROCEDURE messages_read_all()
 AS
 BEGIN
   ECHO SELECT * FROM messages ORDER BY id;
 END //
 
-CREATE PROCEDURE messages_update(_id bigint, _content varchar(300))
+CREATE OR REPLACE PROCEDURE messages_update(_id bigint, _content varchar(300))
 AS
 BEGIN
   UPDATE messages SET content = _content WHERE id = _id;
 END //
 
-CREATE PROCEDURE messages_delete(_id bigint)
+CREATE OR REPLACE PROCEDURE messages_delete(_id bigint)
 AS
 BEGIN
   DELETE FROM messages WHERE id = _id;
