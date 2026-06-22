@@ -1,20 +1,19 @@
-version: '3'
-
 services:
   singlestore:
-    image: memsql/cluster-in-a-box
+    image: ghcr.io/singlestore-labs/singlestoredb-dev:latest
+    platform: linux/amd64
     ports:
     - 3306:3306
     - 8080:8080
+    - 9000:9000
     volumes:
     # persist data between runs:
-    - db-data:/var/lib/memsql
+    - db-data:/data
     - ./init.sql:/init.sql
     environment:
-    # use the LICENSE_KEY environment variable set in the terminal:
-    - LICENSE_KEY=${LICENSE_KEY}
-    - START_AFTER_INIT=Y
     - ROOT_PASSWORD=password_here
+    # Optional; the dev image runs without a license on up to 8 cores / 64GB RAM:
+    # - SINGLESTORE_LICENSE=${SINGLESTORE_LICENSE}
 
 volumes:
   db-data:
